@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const ProductForm = () => {
+const ProductForm = (props) => {
+    
+    const {product, setProduct} = props;
 
     // useState to keep track of what is being typed
     const [title, setTitle] = useState("");
@@ -20,10 +22,17 @@ const ProductForm = () => {
         })
 
             .then ( res => {
-                setTitle(res.data.title)
-                setPrice(res.data.price)
-                setDescription(res.data.description)
+                console.log(res);
+                console.log(res.data);
+
+                // update lifted state of product array with current value in state
+                setProduct([...product, res.data]);
+
+                // setTitle(res.data.title)
+                // setPrice(res.data.price)
+                // setDescription(res.data.description)
             })
+            
             .catch ((err) => console.log(err));
     }
 
@@ -38,7 +47,7 @@ const ProductForm = () => {
                             <input 
                                 type='text'
                                 name='title'
-                                className='form-controler'
+                                className='form-controller'
                                 id='title'
                                 placeholder='Title'
                                 onChange={(e) => {
@@ -52,7 +61,7 @@ const ProductForm = () => {
                             <input 
                                 type='text'
                                 name='price'
-                                className='form-controler'
+                                className='form-controller'
                                 id='price'
                                 placeholder='$'
                                 onChange={(e) => {
@@ -66,7 +75,7 @@ const ProductForm = () => {
                             <input 
                                 type='text'
                                 name='description'
-                                className='form-controler'
+                                className='form-controller'
                                 id='description'
                                 placeholder='Description'
                                 onChange={(e) => {
