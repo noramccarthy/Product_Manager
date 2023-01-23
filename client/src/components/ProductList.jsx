@@ -28,6 +28,7 @@ const ProductList = (props) => {
                         <div key = {index}>
                         
                             <Link to = {'/product/' + product._id}> {product.title} </Link>
+
                         </div>
 
                 )

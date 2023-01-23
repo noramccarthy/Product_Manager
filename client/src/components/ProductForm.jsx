@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const ProductForm = (props) => {
     
@@ -10,16 +11,20 @@ const ProductForm = (props) => {
     const [price, setPrice] = useState("");
     const [description, setDescription] = useState("");
 
+    const navigate = useNavigate();
+
     const onSubmitHandler = (e) => {
         // prevent refresh
         e.preventDefault();
+        navigate("/");
 
         // make a post request to create a new product
-        axios.post("http://localhost:8000/api/product", {
-            title: title,
-            price: price,
-            description: description
-        })
+        axios
+            .post("http://localhost:8000/api/product", {
+                title: title,
+                price: price,
+                description: description
+            })
 
             .then ( res => {
                 console.log(res);
@@ -27,10 +32,9 @@ const ProductForm = (props) => {
 
                 // update lifted state of product array with current value in state
                 setProduct([...product, res.data]);
-
-                // setTitle(res.data.title)
-                // setPrice(res.data.price)
-                // setDescription(res.data.description)
+                setTitle(res.data.title);
+                setPrice(res.data.price);
+                setDescription(res.data.description);
             })
             
             .catch ((err) => console.log(err));
@@ -88,6 +92,6 @@ const ProductForm = (props) => {
             </div>
         </div>
     )
-}
+};
 
 export default ProductForm;

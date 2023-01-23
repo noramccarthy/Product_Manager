@@ -37,6 +37,18 @@ module.exports = {
                 error: err
             })
         );
+    },
+
+    updateProduct: (req, res) => {
+        Product.findOneAndUpdate({_id:req.params.id}, req.body, {new:true})
+            .then(updatedProduct => res.json(updatedProduct))
+            .catch(err => res.json(err))
+    },
+
+    deleteProduct: (req, res) => {
+        Product.deleteOne({_id: req.params.id})
+            .then(deletedProduct => res.json(deletedProduct))
+            .catch(err => res.json(err))
     }
 
 };
